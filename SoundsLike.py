@@ -16,7 +16,7 @@ import pickle
 import cmudict
 from g2p_en import G2p
 
-from dictionary import dictionary
+from assemblyai.data_processing.proper_nouns.add_noise.SoundsLike.dictionary import dictionary
 
 ### Set Pronouncing Dictionary Here ###
 """
@@ -63,7 +63,6 @@ class Word_Functions():
                     "Dictionary Error: Search term or search token not found in dictionary. "
                     "Contact administrator to update dictionary if necessary."
                 )
-
         pron = [p for sublist in search_pron for p in sublist]  # flatten list of lists into one list
         return pron
 
@@ -148,10 +147,7 @@ class Phone_Functions():
     def ARPAbet_class(phone):
         return ARPAbet_Phonemes_Dict[phone]
 
-
-
 class Search():
-
     def perfectHomophones(Search_Term, generate=False):
         """
         Takes a search term, searches its pronunciation,
@@ -169,9 +165,10 @@ class Search():
         by ignoring stress marks.
         """
         Search_Pron = Word_Functions.pronunciation(Search_Term, generate)
-        Search_Pron = [Phone_Functions.unstressed_phone(p) for p in Search_Pron]
 
-        CloseHomophones = [word.title() for word in dictionary.dset if [Phone_Functions.unstressed_phone(p) for p in dictionary[word]] == Search_Pron]
+        Search_Pron = [Phone_Functions.unstressed_phone(p) for p in Search_Pron]
+        # CloseHomophones = [word.title() for word in dictionary.dset if [Phone_Functions.unstressed_phone(p) for p in dictionary[word]] == Search_Pron]
+        CloseHomophones = [k for k,v in dictionary.phoneme_word_dict.items() if v == Search_Pron]
 
         return CloseHomophones
 

@@ -1,3 +1,27 @@
+# SoundsLike 
+
+This package finds similar sounding words to a given word.
+
+This was imported from https://github.com/taufique74/SoundsLike and extends the corpus of the SoundsLike library to include more proper nouns.
+
+## Instructions
+1. Download the extended corpus from GCS into the `assemblyai/third_party/SoundsLike` folder
+```
+gsutil cp gs://aai-us-central1/datasets/peyash/pn_phoneme_dict.pickle assemblyai/third_party/SoundsLike
+``` 
+2. Import this library
+```
+import assemblyai.third_party.SoundsLike.SoundsLike as SoundsLike
+```
+3. Create an instance of SoundsLike.Search and use it to extract similar sounding words.
+
+```
+soundslike_search = SoundsLike.Search(custom_dict="assemblyai/third_party/SoundsLike/pn_phoneme_dict.pickle")
+similar_words = soundslike_search.closeHomophones(<your text>)
+```
+Instantiating the class should take about 20 seconds and 5GB of RAM as the dictionary is large. Use the same class instance to call the method to avoid this overhead on every word if you're running this across a large number of words.
+
+
 # <p align="right">Welcome to SoundsLike</p>
     
 ## <p align="right">SoundsLike is a python package  <br>SoundsLike helps find words that sound like other words</p>
